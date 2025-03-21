@@ -40,7 +40,7 @@ android {
 }
 
 dependencies {
-
+    // Core Android and Jetpack Compose dependencies
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -49,6 +49,29 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+
+    // Retrofit and OkHttp for API calls
+    implementation (libs.retrofit2.retrofit)
+    implementation (libs.converter.gson)
+    implementation (libs.okhttp)
+    implementation (libs.logging.interceptor)
+
+    // Gson for JSON parsing
+    //noinspection GradleDependency
+    implementation (libs.gson)
+
+    // Coroutines for asynchronous programming
+    //noinspection GradleDependency
+    implementation (libs.kotlinx.coroutines.core)
+    //noinspection GradleDependency,GradleDependency
+    implementation (libs.kotlinx.coroutines.android)
+    implementation(libs.androidx.navigation.runtime.android)
+
+    //noinspection GradleDependency
+    implementation (libs.androidx.navigation.compose)
+    implementation (libs.androidx.hilt.navigation.compose)
+    implementation(libs.androidx.appcompat)
+    // Testing dependencies
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
