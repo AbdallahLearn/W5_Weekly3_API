@@ -14,4 +14,3 @@ class CityViewModelFactory(private val getCitiesUseCase: GetCitiesUseCase) : Vie
         throw IllegalArgumentException("Unknown ViewModel class")
     }
 }
-
