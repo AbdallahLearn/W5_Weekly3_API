@@ -7,5 +7,5 @@ import com.google.gson.annotations.SerializedName
 data class ApiResponse<T>(
     @SerializedName("error") val error: Boolean,
     @SerializedName("msg") val msg: String,
-    @SerializedName("data") val data: T // Single object, not a list
+    @SerializedName("data") val data: T
 )

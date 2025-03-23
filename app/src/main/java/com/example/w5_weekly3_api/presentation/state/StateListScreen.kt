@@ -68,7 +68,7 @@ fun StateListScreen(navController: NavController, countryName: String) {
             LazyColumn(modifier = Modifier.fillMaxSize()) {
                 items(states) { state ->
                     StateItem(state = state, onClick = {
-                        // Navigate to cities screen if needed
+                        navController.navigate("cities/${countryName}/${state.name}")
                     })
                 }
             }

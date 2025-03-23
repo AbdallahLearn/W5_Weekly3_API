@@ -1,5 +1,7 @@
 package com.example.w5_weekly3_api.data
 
+import com.google.gson.annotations.SerializedName
+
 data class City(
-    val name:String
+    @SerializedName("name") val name: String
 )

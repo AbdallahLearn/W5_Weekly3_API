@@ -1,5 +1,6 @@
 package com.example.w5_weekly3_api
 
+import CityListScreen
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -81,11 +82,16 @@ class MainActivity : ComponentActivity() {
 fun AppNavigation(navController: NavHostController) {
     NavHost(navController = navController, startDestination = "countries") {
         composable("countries") {
-            CountryListScreen(navController) // ViewModelStoreOwner is automatically provided
+            CountryListScreen(navController)
         }
         composable("states/{countryName}") { backStackEntry ->
             val countryName = backStackEntry.arguments?.getString("countryName") ?: ""
             StateListScreen(navController, countryName)
+        }
+        composable("cities/{country}/{state}") { backStackEntry ->
+            val country = backStackEntry.arguments?.getString("country") ?: ""
+            val state = backStackEntry.arguments?.getString("state") ?: ""
+            CityListScreen(navController, country, state)
         }
     }
 }

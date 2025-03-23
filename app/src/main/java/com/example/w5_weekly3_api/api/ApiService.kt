@@ -1,5 +1,6 @@
 import com.example.w5_weekly3_api.api.ApiResponse
 import com.example.w5_weekly3_api.data.City
+import com.example.w5_weekly3_api.data.CityRequest
 import com.example.w5_weekly3_api.data.Country
 import com.example.w5_weekly3_api.data.CountryWithStates
 import com.example.w5_weekly3_api.data.State
@@ -17,19 +18,9 @@ interface ApiService {
     @POST("countries/states")
     suspend fun getStates(@Body request: StateRequest): ApiResponse<CountryWithStates>
 
-    @GET("countries/{countryCode}/states/{stateCode}/cities")
-    suspend fun getCities(
-        @Path("countryCode") countryCode: String,
-        @Path("stateCode") stateCode: String
-    ): ApiResponse<List<City>>
+    @POST("countries/state/cities")
+    suspend fun getCities(@Body request: CityRequest): ApiResponse<List<String>>
 }
-//interface ApiService {
-//    @GET("states")
-//    suspend fun getStates(@Query("country") countryCode: String): ApiResponse<List<State>>  // ✅ Corrected endpoint
-//
-//    @POST("cities")
-//    suspend fun getCities(@Body request: CityRequest): ApiResponse<List<City>>  // ✅ Corrected endpoint
-//}
 
 data class StateRequest(
     @SerializedName("country") val country: String
