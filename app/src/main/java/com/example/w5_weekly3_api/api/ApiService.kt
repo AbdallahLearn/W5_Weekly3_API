@@ -26,8 +26,3 @@ data class StateRequest(
     @SerializedName("country") val country: String
 )
 
-data class StateResponse(
-    @SerializedName("name") val name: String, // Country name
-    @SerializedName("iso2") val iso2: String, // Country code
-    @SerializedName("states") val states: List<State> // List of states
-)
