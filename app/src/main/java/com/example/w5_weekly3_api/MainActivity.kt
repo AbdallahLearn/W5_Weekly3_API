@@ -14,15 +14,50 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.w5_weekly3_api.presentation.CountryListScreen
+import com.example.w5_weekly3_api.presentation.CountryViewModel
+import com.example.w5_weekly3_api.presentation.StateListScreen
 import com.example.w5_weekly3_api.ui.theme.W5_Weekly3_APITheme
 
+
+//
+//class MainActivity : ComponentActivity() {
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//        setContent {
+//            W5_Weekly3_APITheme {
+//                Surface(
+//                    modifier = Modifier.fillMaxSize(),
+//                    color = MaterialTheme.colorScheme.background
+//                ) {
+//                    Column(){
+//                        Text(
+//
+//                            modifier = Modifier.fillMaxWidth()
+//                                .padding(top=10.dp),
+//                            text="Country Lists",
+//                            fontSize = 30.sp,
+//                            textAlign = TextAlign.Center
+//                        )
+//                        Spacer(modifier = Modifier.height(10.dp))
+////                        CountryListScreen()
+//                        StateListScreen()
+//                    }
+//
+//                }
+//            }
+//        }
+//    }
+//}
 
 
 class MainActivity : ComponentActivity() {
@@ -34,22 +69,23 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Column(){
-                        Text(
-
-                            modifier = Modifier.fillMaxWidth()
-                                .padding(top=10.dp),
-                            text="Country Lists",
-                            fontSize = 30.sp,
-                            textAlign = TextAlign.Center
-                        )
-                        Spacer(modifier = Modifier.height(10.dp))
-                        CountryListScreen()
-                    }
-
+                    val navController = rememberNavController()
+                    AppNavigation(navController)
                 }
             }
         }
     }
 }
 
+@Composable
+fun AppNavigation(navController: NavHostController) {
+    NavHost(navController = navController, startDestination = "countries") {
+        composable("countries") {
+            CountryListScreen(navController) // ViewModelStoreOwner is automatically provided
+        }
+        composable("states/{countryName}") { backStackEntry ->
+            val countryName = backStackEntry.arguments?.getString("countryName") ?: ""
+            StateListScreen(navController, countryName)
+        }
+    }
+}
