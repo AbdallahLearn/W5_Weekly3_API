@@ -1,6 +1,5 @@
 import com.example.w5_weekly3_api.api.ApiResponse
 import com.example.w5_weekly3_api.data.City
-import com.example.w5_weekly3_api.data.CityRequest
 import com.example.w5_weekly3_api.data.Country
 import com.example.w5_weekly3_api.data.CountryWithStates
 import com.example.w5_weekly3_api.data.State
@@ -19,7 +18,7 @@ interface ApiService {
     suspend fun getStates(@Body request: StateRequest): ApiResponse<CountryWithStates>
 
     @POST("countries/state/cities")
-    suspend fun getCities(@Body request: CityRequest): ApiResponse<List<String>>
+    suspend fun getCities(@Body request: City): ApiResponse<List<String>>
 }
 
 data class StateRequest(

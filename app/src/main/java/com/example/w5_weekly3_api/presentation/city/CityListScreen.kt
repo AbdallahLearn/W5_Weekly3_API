@@ -20,12 +20,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.w5_weekly3_api.data.City
-
+import com.example.w5_weekly3_api.domain.usecase.GetCitiesUseCase
+import com.example.w5_weekly3_api.presentation.city.factory.CityViewModelFactory
 
 @Composable
 fun CityListScreen(navController: NavController, country: String, state: String) {
-    val viewModel: CityViewModel = viewModel()
+    val factory = CityViewModelFactory(GetCitiesUseCase()) // Ensure this factory is implemented correctly
+    val viewModel: CityViewModel = viewModel(factory = factory)
+
     val cities by viewModel.cities.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
     val errorMessage by viewModel.errorMessage.collectAsState()
@@ -45,27 +47,26 @@ fun CityListScreen(navController: NavController, country: String, state: String)
                 .align(Alignment.CenterHorizontally)
         )
 
-        // Show loading indicator if data is being fetched
-        if (isLoading) {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                CircularProgressIndicator()
+        when {
+            isLoading -> {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    CircularProgressIndicator()
+                }
             }
-        }
-        // Show error message if there's an error
-        else if (errorMessage != null) {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Text(
-                    text = errorMessage!!,
-                    color = Color.Red,
-                    style = MaterialTheme.typography.bodyLarge
-                )
+            errorMessage != null -> {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    Text(
+                        text = errorMessage!!,
+                        color = Color.Red,
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                }
             }
-        }
-        // Show the list of cities if data is available
-        else {
-            LazyColumn(modifier = Modifier.fillMaxSize()) {
-                items(cities) { city ->
-                    CityItem(city = city)
+            else -> {
+                LazyColumn(modifier = Modifier.fillMaxSize()) {
+                    items(cities) { city ->
+                        CityItem(city = city)
+                    }
                 }
             }
         }
